@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.lei.dao.SerialDao;
 import org.lei.model.SeriInfo;
+import org.lei.util.ReadFile;
 import org.springframework.stereotype.Component;
 
 @Component("serialService")
@@ -34,7 +35,11 @@ public class SerialService {
 			}
 			return 0;
 		}
-		
+		/**
+		 * 删除指定的序列
+		 * @param id
+		 * @return
+		 */
 		public int delSeriInfo(String []id){
 			try{
 				serialDao.delSerial(id);
@@ -42,6 +47,18 @@ public class SerialService {
 			}catch(Exception e){
 				return 0;
 			}
+		}
+		
+		/**
+		 * 增加序列
+		 * @param seriInfo
+		 * @return
+		 */
+		public int addSerial(SeriInfo seriInfo){
+			seriInfo.setQuality(new ReadFile().getQuality(seriInfo.getSerial()));
+			if(serialDao.insertSerial(seriInfo)>0)
+				return 1;
+			return 0;
 		}
 		
 }

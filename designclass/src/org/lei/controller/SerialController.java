@@ -62,5 +62,13 @@ public class SerialController {
 			return "index";
 		}
 		
+		@RequestMapping("/addSeriInfo")
+		public String delSeriInfo(SeriInfo seriInfo,HttpServletRequest req,ModelMap mm){
+			System.out.println(seriInfo.toString());
+			serialService.addSerial(seriInfo);
+			getSeriInfos(0+"", req, mm);
+			return "index";
+		}
+		
 		
 }

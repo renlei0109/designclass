@@ -7,6 +7,7 @@
 <html>
 <head>
 <link href="/designclass/css/blue.css" rel="stylesheet">
+<link href="/designclass/css/button.css" rel="stylesheet">
 <script src="/designclass/js/icheck.min.js"></script>
 <script src="/designclass/js/jquery-1.9.1.min.js"></script>
 <%
@@ -47,80 +48,16 @@
 		});
 	});
 	
-	    
-		/*  	if(flag){
-			    $('input:button').click(function(){
-			        alert("***************");
-			        $('input:checkbox:checked').each(function() {
-			            checked.push($(this).val());
-			        });
-			        alert(checked);
-			        checked = [];
-			    });
-		 	}  */
-			
 			
 	$(document).ready(function(){
 			    $('input').iCheck({
 			    checkboxClass: 'icheckbox_minimal',
 			    radioClass: 'iradio_minimal',
 			    increaseArea: '20%' // optional
-			    /* alert("fsd"); */
 			  });
 			});
 	
 </script>
-
-<!-- <script>
-	$(document).ready(function(){
-		alert("fdsf222");
-	    var checked = [];
-	    $("#delBtn").click(function(){
-	    	alert("fsdf");
-	        $('input:checkbox:checked').each(function() {
-	            checked.push($(this).val());
-	        });
-	        alert(checked);
-	    });
-	});
-</script> -->
-
-<!-- <script>
-	$(document).ready(function(){
-		alert("fdsf");
-	    var checked = [];
-	    $("#delBtn").click(function(){
-	    	alert("fsdf");
-	        $('input:checkbox:checked').each(function() {
-	            checked.push($(this).val());
-	        });
-	        alert(checked);
-	    });
-	});
-</script> -->
-
-<!-- 
-<script type="text/javascript">
-function altRows(id){
-	if(document.getElementsByTagName){  
-		
-		var table = document.getElementById(id);  
-		var rows = table.getElementsByTagName("tr"); 
-		 
-		for(i = 0; i < rows.length; i++){          
-			if(i % 2 == 0){
-				rows[i].className = "evenrowcolor";
-			}else{
-				rows[i].className = "oddrowcolor";
-			}      
-		}
-	}
-}
-
-window.onload=function(){
-	altRows('alternatecolor');
-}
-</script> -->
 
 
 <!-- CSS goes in the document HEAD or added to your external stylesheet -->
@@ -159,7 +96,7 @@ table.altrowstable td {
 </head>
 <body>
 <div style="margin:0 auto;text-align:center;">
-	<input type="button" value ="删除" id = "delBtn"/>
+	
 	<table class="altrowstable">
 		
 		<thead>
@@ -180,12 +117,15 @@ table.altrowstable td {
 				<td><%=sInfo.getDescription()%></td>
 				<td><%=sInfo.getSerial() %></td>
 				<td><%=sInfo.getQuality() %></td>
-			    <td><input type="button" value ="删除"name = "delBtn"/></td> 
+			    <td><input  class="button button-rounded button-flat" type="button" value ="删除"name = "delBtn"/></td> 
 			</tr>
 			<%} %>
 			
 		</thead>
 	</table>
+	<div style="flow:right">
+	<input class="button button-pill button-royal" align="right" type="button" value ="删除" id = "delBtn"/>
+	</div>
 	<div style="margin:0 auto">
 		<tr>
 				<%if(currentPage>0){ %>
