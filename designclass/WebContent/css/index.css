@@ -1,0 +1,59 @@
+body { margin: 0 0 0 0; padding: 0 0 0 0; }
+        #Layer1 { position:absolute; width:100%; height:100%; z-index:-1; }
+        #login {
+            width: 700px;
+            height: 320px;
+            z-index: 100;
+            margin: auto;
+            position: relative;
+            top: 200px;
+        }
+        #title_chn {
+            font-size: 38px;
+            color: #f8d40e;
+            display: block;
+            width: 700px;
+            text-align: center;
+            font-weight: bold;
+        }
+        #title_eng {
+            font-size: 28px;
+            color: white;
+            display: block;
+            width: 700px;
+            text-align: center;
+            letter-spacing: 8px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        #username, #password {
+            padding-left: 85px;
+            width: 400px;
+            height: 50px;
+            outline: none;
+            border-radius: 8px;
+            border: none;
+            font-size: 26px;
+            position: relative;
+            top: -22px;
+            left: 100px;
+            color: black;
+            filter:alpha(opacity=30);  -moz-opacity:0.3;  -khtml-opacity: 0.3;  opacity: 0.3;
+        }
+        #password { top:-40px; }
+        .operate {
+            width: 75px;
+            height: 35px;
+            background: white;
+            filter:alpha(opacity=60);  -moz-opacity:0.6;  -khtml-opacity: 0.6;  opacity: 0.6;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            color: #f8d40e;
+            font-size: 18px;
+            position: relative;
+            left: 230px;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+        #reset_submit { margin-left: 25px; }
