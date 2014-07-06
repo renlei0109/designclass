@@ -19,6 +19,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.lei.model.SeriInfo;
+import org.lei.util.Constant;
 import org.lei.util.ReadFile;
 
 import com.sun.istack.internal.FinalArrayList;
@@ -79,6 +80,17 @@ public class SerialDao {
 	public int insertSerial(SeriInfo seriInfo){
 		try{
 			hibernateTemplate.save(seriInfo);
+			/*Connection connection = jdbcTemplate.getDataSource().getConnection();
+			PreparedStatement ps = null;
+			String sql = "insert into seriinfo values(?,?,?,?)";
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, seriInfo.getId());
+			ps.setString(2, seriInfo.getDescription());
+			ps.setString(3, seriInfo.getSerial());
+			ps.setInt(4, seriInfo.getQuality());
+			ps.executeUpdate();
+			System.out.println(seriInfo.toString());*/
+			System.out.println("************************成功**********************");
 			return 1;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -102,14 +114,6 @@ public class SerialDao {
 		});
 		return 1;
 		
-		/*try{
-			
-			hibernateTemplate.delete(id);
-				return 1;
-		}catch(Exception e){
-			e.printStackTrace();
-			return 0;
-		}*/
 	}
 	/**
 	 * 修改某个序列的信息
@@ -162,27 +166,65 @@ public class SerialDao {
 			
 		}
 		connection.close();
+		session.close();
 		ps.close();
 		return 1;
-		
-	/*	jdbcTemplate.batchUpdate(hql, new BatchPreparedStatementSetter() {
-			
+
+	}
+	
+	
+	
+	/** 
+	 * 分页精确查找所有符合条件的字符串
+	 * */
+	@SuppressWarnings("unchecked")
+	public List<SeriInfo>exactSelectSeriInfos(int currentPage,final String str){
+		final int currPage = currentPage;
+		final String hql = "from SeriInfo where serial like '%"+ str +"%'";
+		Constant.totalPage = hibernateTemplate.find(hql).size();
+		List<SeriInfo> seriInfos = null;
+		seriInfos = new ArrayList<SeriInfo>();
+		seriInfos = hibernateTemplate.executeFind(new HibernateCallback() {
 			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-					
-					ps.setString(1, seriInfos.get(i).getId());
-					ps.setString(2, seriInfos.get(i).getDescription());
-					ps.setString(3, seriInfos.get(i).getSerial());
-					ps.setInt(4, seriInfos.get(i).getQuality());
-					ps.addBatch();
-					
+			public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+				Query query = session.createQuery(hql);
+				query.setFirstResult((currPage-1)*pageSize);
+				query.setMaxResults(pageSize);
+				List<SeriInfo>result  = query.list();
+				return result;
 			}
 			
+		});
+		return seriInfos;
+	}
+	
+	
+	/** 
+	 * 分页模糊查找所有符合条件的字符串
+	 * */
+	@SuppressWarnings("unchecked")
+	public List<SeriInfo>inexactSelectSeriInfos(int currentPage,final String str){
+		final int currPage = currentPage;
+		final String hql = "from SeriInfo where serial like '%"+ str +"%'";
+		Constant.totalPage = hibernateTemplate.find(hql).size();
+		List<SeriInfo> seriInfos = null;
+		seriInfos = new ArrayList<SeriInfo>();
+		seriInfos = hibernateTemplate.executeFind(new HibernateCallback() {
 			@Override
-			public int getBatchSize() {
-				return seriInfos.size();
+			public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+				Query query = session.createQuery(hql);
+				query.setFirstResult((currPage-1)*pageSize);
+				query.setMaxResults(pageSize);
+				List<SeriInfo>result  = query.list();
+				return result;
 			}
 		});
-		return 0;*/
+		return seriInfos;
 	}
+	
+	
+	
+	
 }

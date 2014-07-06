@@ -1,3 +1,4 @@
+<%@page import="org.lei.util.Constant"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="org.lei.model.SeriInfo"%>
@@ -12,7 +13,8 @@
 <script src="/designclass/js/jquery-1.9.1.min.js"></script>
 <%
 	int currentPage =Integer.valueOf( session.getAttribute("currentPage").toString());
-	int totalPage = 265951/20;
+	String exactStr = session.getAttribute("exactStr").toString();
+	int totalPage = Constant.totalPage/20+1;
 	List<SeriInfo>seriInfos = new ArrayList<SeriInfo>();
 	seriInfos = (List<SeriInfo>)session.getAttribute("seriInfos");
 %>
@@ -129,14 +131,14 @@ table.altrowstable td {
 	<div style="margin:0 auto">
 		<tr>
 				<%if(currentPage>0){ %>
-					<td><a href="/designclass/serial/getSeriInfos.do?currentPage=<%=currentPage-1 %>" style="color:blue"><--上一页 </a></td>
+					<td><a href="/designclass/serial/exactFindSeriInfos.do?currentPage=<%=currentPage-1 %>&exactStr=<%=exactStr %>" style="color:blue"><--上一页 </a></td>
 					&nbsp;
 				<%} %>
-				<td>当前页数:<%=currentPage %></td>
+				<td>当前页数:<%=currentPage%></td>
 				&nbsp;&nbsp;
 				<td>总页数:<%=totalPage %></td>
 				&nbsp;
-				<td><a href="/designclass/serial/getSeriInfos.do?currentPage=<%=currentPage+1 %>" style="color:blue">下一页--></a></td>
+				<td><a href="/designclass/serial/exactFindSeriInfos.do?currentPage=<%=currentPage+1 %>&exactStr=<%=exactStr %>" style="color:blue">下一页--></a></td>
 		</tr>
 	</div>	
 </div>	

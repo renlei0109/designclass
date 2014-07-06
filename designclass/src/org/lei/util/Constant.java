@@ -25,4 +25,5 @@ public class Constant {
 	public  static final  int R=156;
 	public  static final  int Y=163;
 	public  static final  int W=186;
+	public 	static int totalPage = 0; 
 }

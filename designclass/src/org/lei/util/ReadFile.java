@@ -19,7 +19,7 @@ public class ReadFile {
 
 	
 		public List<SeriInfo> readFile() throws  Exception{
-			File file = new File("C:/Users/磊/Desktop/test.txt");
+			File file = new File("C:/Users/磊/Desktop/test2.txt");
 			String key = null;
 			String description = null;
 			String serial = null;

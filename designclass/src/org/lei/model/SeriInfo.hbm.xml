@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2014-6-26 17:28:03 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="org.lei.model.SeriInfo" table="seriinfo">
+    <class name="org.lei.model.SeriInfo" table="seriinfo2">
         <id name="id" type="java.lang.String">
             <column name="id" />
         </id>

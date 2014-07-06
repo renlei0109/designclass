@@ -36,7 +36,7 @@ public class SerialController {
 		@RequestMapping("/getSeriInfos.do")
 		public String getSeriInfos(@RequestParam("currentPage") String currentPage,HttpServletRequest req,ModelMap mm){
 			System.out.println("*************");
-			List<SeriInfo>seriInfos = serialService.getSeriInfos(Integer.valueOf(currentPage)-1);
+			List<SeriInfo>seriInfos = serialService.getSeriInfos(Integer.valueOf(currentPage));
 			HttpSession session = req.getSession();
 			session.setAttribute("seriInfos", seriInfos);
 			session.setAttribute("currentPage", currentPage);
@@ -56,18 +56,44 @@ public class SerialController {
 				System.out.println("失败*******************");
 			}
 			String  currentPage = req.getSession().getAttribute("currentPage").toString();
-			//return "forward:http://localhost:8080/designclass/serial/getSeriInfos.do?currentPage="+req.getSession().getAttribute("currentPage").toString();
-			//return "redirect:http://localhost:8080/designclass/serial/getSeriInfos.do?currentPage="+req.getSession().getAttribute("currentPage").toString();
-			//getSeriInfos(currentPage, req, mm);
 			return "index";
 		}
 		
 		@RequestMapping("/addSeriInfo")
 		public String delSeriInfo(SeriInfo seriInfo,HttpServletRequest req,ModelMap mm){
-			System.out.println(seriInfo.toString());
+			System.out.println("****************"+seriInfo.toString()+"******************************************");
 			serialService.addSerial(seriInfo);
 			getSeriInfos(0+"", req, mm);
 			return "index";
+		}
+		
+		
+		@RequestMapping("/exactFindSeriInfos.do")
+		public String exactFindSeriInfos(@RequestParam("currentPage") String currentPage,@RequestParam("exactStr")String exactStr,HttpServletRequest req,ModelMap mm){
+			System.out.println("*************"+currentPage+exactStr);
+			List<SeriInfo>seriInfos = serialService.exactFindSeriInfos((Integer.valueOf(currentPage)),exactStr);
+			HttpSession session = req.getSession();
+			session.setAttribute("seriInfos", seriInfos);
+			session.setAttribute("currentPage", currentPage);
+			session.setAttribute("exactStr", exactStr);
+			mm.put("seriInfos", seriInfos);
+			return "exactfindresult";
+		}
+		
+		@RequestMapping("/inexactFindSeriInfos.do")
+		public String inexactFindSeriInfos(@RequestParam("currentPage") String currentPage,@RequestParam("inexactStr")String inexactStr,HttpServletRequest req,ModelMap mm){
+			String []args = inexactStr.split("\\*");
+			StringBuffer sb = new StringBuffer();
+			for(int i = 0;i<args.length;i++){
+				sb.append(args[i]);
+			}
+			List<SeriInfo>seriInfos = serialService.inexactFindSeriInfos((Integer.valueOf(currentPage)),sb.toString().toUpperCase());
+			HttpSession session = req.getSession();
+			session.setAttribute("seriInfos", seriInfos);
+			session.setAttribute("currentPage", currentPage);
+			session.setAttribute("inexactStr", inexactStr);
+			mm.put("seriInfos", seriInfos);
+			return "inexactfindresult";
 		}
 		
 		

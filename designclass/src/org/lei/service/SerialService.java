@@ -22,6 +22,11 @@ public class SerialService {
 			this.serialDao = serialDao;
 		}
 		
+		/**
+		 * 分页查询seriinfo分页加载
+		 * @param currentPage
+		 * @return
+		 */
 		public List<SeriInfo>getSeriInfos(int currentPage){
 			List<SeriInfo>seriInfos = serialDao.queryListSeriInfos(currentPage);
 			return seriInfos;
@@ -60,5 +65,28 @@ public class SerialService {
 				return 1;
 			return 0;
 		}
+		
+		/**
+		 * 根据输入的字符串和当前页数，分页加载精确查找的结果
+		 * @param currentPage
+		 * @param exactstr
+		 * @return
+		 */
+		public List<SeriInfo>exactFindSeriInfos(int currentPage,String exactstr){
+				return serialDao.exactSelectSeriInfos(currentPage, exactstr);
+		}
+		
+		/**
+		 * 根据输入的字符串和当前页数，分页加载精确查找的结果
+		 * @param currentPage
+		 * @param inexactstr
+		 * @return
+		 */
+		public List<SeriInfo>inexactFindSeriInfos(int currentPage,String inexactStr){
+				return serialDao.exactSelectSeriInfos(currentPage, inexactStr);
+		}
+		
+		
+		
 		
 }
