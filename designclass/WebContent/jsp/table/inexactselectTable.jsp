@@ -98,7 +98,8 @@ table.altrowstable td {
 </head>
 <body>
 <div style="margin:0 auto;text-align:center;">
-	
+	模糊查询</br>
+	查询时间：<span style="color:red"><%=Constant.time %>毫秒</span>
 	<table class="altrowstable">
 		
 		<thead>
@@ -130,7 +131,7 @@ table.altrowstable td {
 	</div>
 	<div style="margin:0 auto">
 		<tr>
-				<%if(currentPage>0){ %>
+				<%if(currentPage>1){ %>
 					<td><a href="/designclass/serial/inexactFindSeriInfos.do?currentPage=<%=currentPage-1 %>&inexactStr=<%=inexactStr %>" style="color:blue"><--上一页 </a></td>
 					&nbsp;
 				<%} %>

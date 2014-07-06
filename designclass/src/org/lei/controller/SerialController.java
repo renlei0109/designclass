@@ -1,5 +1,6 @@
 package org.lei.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -35,20 +36,16 @@ public class SerialController {
 		
 		@RequestMapping("/getSeriInfos.do")
 		public String getSeriInfos(@RequestParam("currentPage") String currentPage,HttpServletRequest req,ModelMap mm){
-			System.out.println("*************");
 			List<SeriInfo>seriInfos = serialService.getSeriInfos(Integer.valueOf(currentPage));
 			HttpSession session = req.getSession();
 			session.setAttribute("seriInfos", seriInfos);
 			session.setAttribute("currentPage", currentPage);
 			mm.put("seriInfos", seriInfos);
-			System.out.println(seriInfos.size());
 			return "index";
 		}
 		
 		@RequestMapping("/delSeriInfo.do")
 		public String delSeriInfo(@RequestParam("checked") String []id,HttpServletRequest req,ModelMap mm){
-			//String []id = req.getParameterValues("checked");//»òÕßÒ²¿ÉÒÔÕâÑùµÃµ½
-			System.out.println(id[0]+"******");
 			if(serialService.delSeriInfo(id)>0){
 				System.out.println("成功**************");
 			}
@@ -61,7 +58,6 @@ public class SerialController {
 		
 		@RequestMapping("/addSeriInfo")
 		public String delSeriInfo(SeriInfo seriInfo,HttpServletRequest req,ModelMap mm){
-			System.out.println("****************"+seriInfo.toString()+"******************************************");
 			serialService.addSerial(seriInfo);
 			getSeriInfos(0+"", req, mm);
 			return "index";
@@ -70,8 +66,7 @@ public class SerialController {
 		
 		@RequestMapping("/exactFindSeriInfos.do")
 		public String exactFindSeriInfos(@RequestParam("currentPage") String currentPage,@RequestParam("exactStr")String exactStr,HttpServletRequest req,ModelMap mm){
-			System.out.println("*************"+currentPage+exactStr);
-			List<SeriInfo>seriInfos = serialService.exactFindSeriInfos((Integer.valueOf(currentPage)),exactStr);
+			List<SeriInfo>seriInfos = serialService.exactFindSeriInfos((Integer.valueOf(currentPage)),exactStr.toUpperCase());
 			HttpSession session = req.getSession();
 			session.setAttribute("seriInfos", seriInfos);
 			session.setAttribute("currentPage", currentPage);
@@ -79,7 +74,14 @@ public class SerialController {
 			mm.put("seriInfos", seriInfos);
 			return "exactfindresult";
 		}
-		
+		/**
+		 * 不精确查找序列
+		 * @param currentPage
+		 * @param inexactStr
+		 * @param req
+		 * @param mm
+		 * @return
+		 */
 		@RequestMapping("/inexactFindSeriInfos.do")
 		public String inexactFindSeriInfos(@RequestParam("currentPage") String currentPage,@RequestParam("inexactStr")String inexactStr,HttpServletRequest req,ModelMap mm){
 			String []args = inexactStr.split("\\*");
@@ -95,6 +97,39 @@ public class SerialController {
 			mm.put("seriInfos", seriInfos);
 			return "inexactfindresult";
 		}
+		
+		/**
+		 * @param currentPage
+		 * @param m
+		 * @param e
+		 * @param req
+		 * @param mm
+		 * @return
+		 */
+		@RequestMapping("/qualityFindSeriInfos.do")
+		public String qualityFindSeriInfos(@RequestParam("currentPage") String currentPage,int m,int e,HttpServletRequest req,ModelMap mm){
+			List<SeriInfo>seriInfos = serialService.qualityFindSeriInfos(Integer.valueOf(currentPage) ,m, e);
+			HttpSession session = req.getSession();
+			session.setAttribute("seriInfos", seriInfos);
+			session.setAttribute("currentPage", currentPage);
+			session.setAttribute("m", m);
+			session.setAttribute("e", e);
+			mm.put("seriInfos", seriInfos);
+			return "findserialbymeresult";
+		}
+		
+		@RequestMapping("/countQuality.do")
+		public  String countQuality(HttpServletRequest req){
+			List<Long>qualityCounts = new ArrayList<Long>();
+			qualityCounts = serialService.getCountQualitys();
+			HttpSession session = req.getSession();
+			session.setAttribute("qualityCounts", qualityCounts);
+			return "qualityChart";
+				
+		}
+		
+		
+		
 		
 		
 }

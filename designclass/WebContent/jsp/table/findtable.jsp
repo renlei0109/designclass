@@ -96,7 +96,7 @@ table.altrowstable td {
 	</br>
 	<span style="margin:0px;padding:0px;font-family:"微软雅黑","黑体","宋体";font-size:18px;height:36px;">质量查询：</span>
 	</br>说明：（用户输入一个质量数m和一个误差参数e，例如质量为1190，误差为0.001）
-	<form name = "seriinfoForm" id = "seriinfoForm" action ="/designclass/serial/addSeriInfo.do" method="post">
+	<form name = "seriinfoForm" id = "seriinfoForm" action ="/designclass/serial/qualityFindSeriInfos.do?currentPage=1" method="post">
 		<table class="altrowstable">
 			<thead>
 				<tr>
@@ -105,8 +105,8 @@ table.altrowstable td {
 				    <th style="width:200px">操作</th>
 				</tr>
 				<tr>
-					<td  ><input style="height:30px;width:300px;font-size:18px;"  type="text" name = "quality" id = "quality"/></td>
-				  	<td  ><input style="height:30px;width:300px;font-size:18px;"  type="text" name = "deviation" id = "deviation"/></td>
+					<td  ><input style="height:30px;width:300px;font-size:18px;"  type="text" name = "m" id = "m"/></td>
+				  	<td  ><input style="height:30px;width:300px;font-size:18px;"  type="text" name = "e" id = "e"/></td>
 				    <td><input type="submit" value ="质量查找"name = "qualFindBtn" class="button button-rounded button-flat" /></td> 
 				</tr>
 				

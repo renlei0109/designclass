@@ -13,7 +13,8 @@
 <script src="/designclass/js/jquery-1.9.1.min.js"></script>
 <%
 	int currentPage =Integer.valueOf( session.getAttribute("currentPage").toString());
-	String exactStr = session.getAttribute("exactStr").toString();
+	int m = Integer.valueOf(session.getAttribute("m").toString());
+	int e = Integer.valueOf(session.getAttribute("e").toString());
 	int totalPage = Constant.totalPage/20+1;
 	List<SeriInfo>seriInfos = new ArrayList<SeriInfo>();
 	seriInfos = (List<SeriInfo>)session.getAttribute("seriInfos");
@@ -98,7 +99,7 @@ table.altrowstable td {
 </head>
 <body>
 <div style="margin:0 auto;text-align:center;">
-	精确查询</br>
+	质量查询</br>
 	查询时间：<span style="color:red"><%=Constant.time %>毫秒</span>
 	<table class="altrowstable">
 		
@@ -109,6 +110,7 @@ table.altrowstable td {
 				<th style="width:25%">序列描述</th>
 				<th style="width:45%">序列号</th>
 				<th style="width:25%">质量</th>
+				<th style="width:25%">质量差</th>
 			    <th style="width:15%">操作</th>
 			</tr>
 			<%
@@ -120,6 +122,7 @@ table.altrowstable td {
 				<td><%=sInfo.getDescription()%></td>
 				<td><%=sInfo.getSerial() %></td>
 				<td><%=sInfo.getQuality() %></td>
+				<td><%=sInfo.getQuality()-m %></td>
 			    <td><input  class="button button-rounded button-flat" type="button" value ="删除"name = "delBtn"/></td> 
 			</tr>
 			<%} %>
@@ -132,14 +135,14 @@ table.altrowstable td {
 	<div style="margin:0 auto">
 		<tr>
 				<%if(currentPage>1){ %>
-					<td><a href="/designclass/serial/exactFindSeriInfos.do?currentPage=<%=currentPage-1 %>&exactStr=<%=exactStr %>" style="color:blue"><--上一页 </a></td>
+					<td><a href="/designclass/serial/qualityFindSeriInfos.do?currentPage=<%=currentPage-1 %>&m=<%=m %>&e=<%=e %>" style="color:blue"><--上一页 </a></td>
 					&nbsp;
 				<%} %>
 				<td>当前页数:<%=currentPage%></td>
 				&nbsp;&nbsp;
 				<td>总页数:<%=totalPage %></td>
 				&nbsp;
-				<td><a href="/designclass/serial/exactFindSeriInfos.do?currentPage=<%=currentPage+1 %>&exactStr=<%=exactStr %>" style="color:blue">下一页--></a></td>
+				<td><a href="/designclass/serial/qualityFindSeriInfos.do?currentPage=<%=currentPage+1 %>&m=<%=m %>&e=<%=e %>" style="color:blue">下一页--></a></td>
 		</tr>
 	</div>	
 </div>	

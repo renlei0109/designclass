@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -179,6 +180,7 @@ public class SerialDao {
 	 * */
 	@SuppressWarnings("unchecked")
 	public List<SeriInfo>exactSelectSeriInfos(int currentPage,final String str){
+		long timeStart = new Date().getTime();
 		final int currPage = currentPage;
 		final String hql = "from SeriInfo where serial like '%"+ str +"%'";
 		Constant.totalPage = hibernateTemplate.find(hql).size();
@@ -196,6 +198,7 @@ public class SerialDao {
 			}
 			
 		});
+		Constant.time = new Date().getTime() - timeStart;
 		return seriInfos;
 	}
 	
@@ -205,6 +208,7 @@ public class SerialDao {
 	 * */
 	@SuppressWarnings("unchecked")
 	public List<SeriInfo>inexactSelectSeriInfos(int currentPage,final String str){
+		long timeStart = new Date().getTime();
 		final int currPage = currentPage;
 		final String hql = "from SeriInfo where serial like '%"+ str +"%'";
 		Constant.totalPage = hibernateTemplate.find(hql).size();
@@ -221,7 +225,59 @@ public class SerialDao {
 				return result;
 			}
 		});
+		Constant.time = new Date().getTime() - timeStart;
 		return seriInfos;
+	}
+	
+	
+	
+	
+	/** 
+	 * 分页质量查找所有符合条件的字符串
+	 * */
+	@SuppressWarnings("unchecked")
+	public List<SeriInfo>qualitySelectSeriInfos(int currentPage,final int m,final int e){
+		long timeStart = new Date().getTime();
+		final int currPage = currentPage;
+		int max = m+e;
+		int min = m-e;
+		final String hql = "from SeriInfo where quality>"+min+" and quality<"+max;
+		Constant.totalPage = hibernateTemplate.find(hql).size();
+		List<SeriInfo> seriInfos = null;
+		seriInfos = new ArrayList<SeriInfo>();
+		seriInfos = hibernateTemplate.executeFind(new HibernateCallback() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException,
+			SQLException {
+				Query query = session.createQuery(hql);
+				query.setFirstResult((currPage-1)*pageSize);
+				query.setMaxResults(pageSize);
+				List<SeriInfo>result  = query.list();
+				return result;
+			}
+		});
+		Constant.time = new Date().getTime() - timeStart;
+		return seriInfos;
+	}
+	
+	
+	/**
+	 * 统计质量的分布
+	 * @return
+	 * 返回一个list的列表
+	 */
+	public List<Long> countQuality(){
+		List<Long>qualityCounts = new ArrayList<Long>();
+		int []range = {0,5000,10000,15000,20000,25000,30000,35000,
+				40000,45000,50000,55000,60000,65000,70000,200000};
+		for(int i = 0;i<range.length-1;i++){
+			List<Long> count = new ArrayList<Long>();
+			String hql = "select count(id) from SeriInfo where quality > "+range[i]+
+			" and quality<="+range[i+1];
+			count = hibernateTemplate.find(hql);
+			qualityCounts.add(count.size()>0?count.get(0):0L);
+				}
+		return qualityCounts;
 	}
 	
 	

@@ -128,7 +128,7 @@ table.altrowstable td {
 	</div>
 	<div style="margin:0 auto">
 		<tr>
-				<%if(currentPage>0){ %>
+				<%if(currentPage>1){ %>
 					<td><a href="/designclass/serial/getSeriInfos.do?currentPage=<%=currentPage-1 %>" style="color:blue"><--上一页 </a></td>
 					&nbsp;
 				<%} %>

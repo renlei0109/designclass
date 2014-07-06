@@ -40,6 +40,8 @@ public class SerialService {
 			}
 			return 0;
 		}
+		
+		
 		/**
 		 * 删除指定的序列
 		 * @param id
@@ -54,6 +56,7 @@ public class SerialService {
 			}
 		}
 		
+		
 		/**
 		 * 增加序列
 		 * @param seriInfo
@@ -66,6 +69,7 @@ public class SerialService {
 			return 0;
 		}
 		
+		
 		/**
 		 * 根据输入的字符串和当前页数，分页加载精确查找的结果
 		 * @param currentPage
@@ -76,8 +80,10 @@ public class SerialService {
 				return serialDao.exactSelectSeriInfos(currentPage, exactstr);
 		}
 		
+		
+		
 		/**
-		 * 根据输入的字符串和当前页数，分页加载精确查找的结果
+		 * 根据输入的字符串和当前页数，分页加载模糊查找的结果
 		 * @param currentPage
 		 * @param inexactstr
 		 * @return
@@ -86,6 +92,27 @@ public class SerialService {
 				return serialDao.exactSelectSeriInfos(currentPage, inexactStr);
 		}
 		
+		
+		/**
+		 * 根据质量范围来获取seriinfos
+		 * @param currentPage
+		 * @param m
+		 * @param e
+		 * @return
+		 */
+		public List<SeriInfo>qualityFindSeriInfos(int currentPage,int m ,int e){
+			return serialDao.qualitySelectSeriInfos(currentPage, m, e);
+		}
+		
+		
+		
+		/**
+		 * 获取每个阶段的quality的数量
+		 * @return
+		 */
+		public List<Long>getCountQualitys(){
+			return serialDao.countQuality();
+		}
 		
 		
 		
