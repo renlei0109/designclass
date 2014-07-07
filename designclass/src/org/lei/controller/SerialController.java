@@ -33,7 +33,13 @@ public class SerialController {
 		public void addBatchSerial(){
 			serialService.addBatchSerial();
 		}
-		
+		/**
+		 * 获取指定的当前页的序列
+		 * @param currentPage
+		 * @param req
+		 * @param mm
+		 * @return
+		 */
 		@RequestMapping("/getSeriInfos.do")
 		public String getSeriInfos(@RequestParam("currentPage") String currentPage,HttpServletRequest req,ModelMap mm){
 			List<SeriInfo>seriInfos = serialService.getSeriInfos(Integer.valueOf(currentPage));
@@ -44,6 +50,13 @@ public class SerialController {
 			return "index";
 		}
 		
+		/**
+		 * 根据序列id删除一个指定的序列
+		 * @param id
+		 * @param req
+		 * @param mm
+		 * @return
+		 */
 		@RequestMapping("/delSeriInfo.do")
 		public String delSeriInfo(@RequestParam("checked") String []id,HttpServletRequest req,ModelMap mm){
 			if(serialService.delSeriInfo(id)>0){
@@ -56,6 +69,14 @@ public class SerialController {
 			return "index";
 		}
 		
+		
+		/**
+		 * 增加一个新的序列
+		 * @param seriInfo
+		 * @param req
+		 * @param mm
+		 * @return
+		 */
 		@RequestMapping("/addSeriInfo")
 		public String delSeriInfo(SeriInfo seriInfo,HttpServletRequest req,ModelMap mm){
 			serialService.addSerial(seriInfo);
@@ -63,7 +84,14 @@ public class SerialController {
 			return "index";
 		}
 		
-		
+		/**
+		 * 根据特定的字符串来精确查找序列
+		 * @param currentPage
+		 * @param exactStr
+		 * @param req
+		 * @param mm
+		 * @return
+		 */
 		@RequestMapping("/exactFindSeriInfos.do")
 		public String exactFindSeriInfos(@RequestParam("currentPage") String currentPage,@RequestParam("exactStr")String exactStr,HttpServletRequest req,ModelMap mm){
 			List<SeriInfo>seriInfos = serialService.exactFindSeriInfos((Integer.valueOf(currentPage)),exactStr.toUpperCase());
@@ -74,6 +102,8 @@ public class SerialController {
 			mm.put("seriInfos", seriInfos);
 			return "exactfindresult";
 		}
+		
+		
 		/**
 		 * 不精确查找序列
 		 * @param currentPage
@@ -99,6 +129,7 @@ public class SerialController {
 		}
 		
 		/**
+		 * 根据质量的范围来查找序列
 		 * @param currentPage
 		 * @param m
 		 * @param e
@@ -118,6 +149,12 @@ public class SerialController {
 			return "findserialbymeresult";
 		}
 		
+		
+		/**
+		 * 统计序列的质量分布
+		 * @param req
+		 * @return
+		 */
 		@RequestMapping("/countQuality.do")
 		public  String countQuality(HttpServletRequest req){
 			List<Long>qualityCounts = new ArrayList<Long>();
@@ -128,6 +165,12 @@ public class SerialController {
 				
 		}
 		
+		
+		/**
+		 * 统计字符序列的长度分布
+		 * @param req
+		 * @return
+		 */
 		@RequestMapping("/countSerialsLength.do")
 		public  String countSerialsLength(HttpServletRequest req){
 			List<Integer>serialLengthCounts = new ArrayList<Integer>();
@@ -138,7 +181,20 @@ public class SerialController {
 				
 		}
 		
-		
+		/**
+		 * 统计字符序列的字母个数
+		 * @param req
+		 * @return
+		 */
+		@RequestMapping("/countSerialCharacters.do")
+		public  String countSerialCharacters(HttpServletRequest req){
+			List<Integer>characterCounts = new ArrayList<Integer>();
+			characterCounts = serialService.getSerialsCharacters();
+			HttpSession session = req.getSession();
+			session.setAttribute("characterCounts", characterCounts);
+			return "serialsCharacterCounts";
+				
+		}
 		
 		
 		

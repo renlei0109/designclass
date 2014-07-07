@@ -21,6 +21,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.lei.model.SeriInfo;
 import org.lei.util.Constant;
+import org.lei.util.CountCharacter;
 import org.lei.util.CountSerialLength;
 import org.lei.util.ReadFile;
 
@@ -181,6 +182,7 @@ public class SerialDao {
 				query.setFirstResult((currPage-1)*pageSize);
 				query.setMaxResults(pageSize);
 				List<SeriInfo>result  = query.list();
+				session.close();
 				return result;
 			}
 			
@@ -209,6 +211,7 @@ public class SerialDao {
 				query.setFirstResult((currPage-1)*pageSize);
 				query.setMaxResults(pageSize);
 				List<SeriInfo>result  = query.list();
+				session.close();
 				return result;
 			}
 		});
@@ -240,6 +243,7 @@ public class SerialDao {
 				query.setFirstResult((currPage-1)*pageSize);
 				query.setMaxResults(pageSize);
 				List<SeriInfo>result  = query.list();
+				session.close();
 				return result;
 			}
 		});
@@ -267,7 +271,10 @@ public class SerialDao {
 		return qualityCounts;
 	}
 	
-	
+	/**
+	 * 统计各个序列的长度
+	 * @return
+	 */
 	public List<Integer>countSerialLength(){
 		List<Integer>serialLengthCounts = new ArrayList<Integer>();
 		List<String>serialList = new ArrayList<String>();
@@ -275,9 +282,22 @@ public class SerialDao {
 		serialList = hibernateTemplate.find(hql);
 		//统计各个阶段的序列号长度
 		serialLengthCounts = new CountSerialLength().countSerialLength(serialList);
-		
 		return serialLengthCounts;
 		
+	}
+	
+	/**
+	 * 统计各个序列的中字符出现的个数
+	 * @return
+	 */
+	public List<Integer>countSerialCharacters(){
+		List<Integer>characterCounts = new ArrayList<Integer>();
+		List<String>serialList = new ArrayList<String>();
+		String hql = "select serial from SeriInfo";
+		serialList = hibernateTemplate.find(hql);
+		//统计各个阶段的序列号长度
+		characterCounts = new CountCharacter().countSerialCharacter(serialList);
+		return characterCounts;
 	}
 	
 	
