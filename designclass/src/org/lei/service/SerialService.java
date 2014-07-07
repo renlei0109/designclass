@@ -114,6 +114,13 @@ public class SerialService {
 			return serialDao.countQuality();
 		}
 		
+		/**
+		 * 统计各个阶段的序列长度
+		 * @return
+		 */
+		public List<Integer>getSerialsLength(){
+			return serialDao.countSerialLength();
+		}
 		
 		
 }

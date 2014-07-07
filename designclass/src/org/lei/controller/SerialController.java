@@ -128,6 +128,16 @@ public class SerialController {
 				
 		}
 		
+		@RequestMapping("/countSerialsLength.do")
+		public  String countSerialsLength(HttpServletRequest req){
+			List<Integer>serialLengthCounts = new ArrayList<Integer>();
+			serialLengthCounts = serialService.getSerialsLength();
+			HttpSession session = req.getSession();
+			session.setAttribute("serialLengthCounts", serialLengthCounts);
+			return "serialsLengthChart";
+				
+		}
+		
 		
 		
 		

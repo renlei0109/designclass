@@ -6,6 +6,7 @@
         <li><a href="/designclass/jsp/insertserial.jsp">数据插入</a></li>
         <li><a href="#">数据删除</a></li>
         <li><a href="/designclass/jsp/findserial.jsp">序列查询</a></li>
+        <li><a href="/designclass/serial/countSerialsLength.do">统计序列长度分布</a></li>
         <li><a href="/designclass/serial/countQuality.do">统计质量分布</a></li>
        </ul>
     </div>

@@ -21,6 +21,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.lei.model.SeriInfo;
 import org.lei.util.Constant;
+import org.lei.util.CountSerialLength;
 import org.lei.util.ReadFile;
 
 import com.sun.istack.internal.FinalArrayList;
@@ -70,9 +71,6 @@ public class SerialDao {
 	}
 	
 	
-	/*public List<SeriInfo> queryListSeriInfosByExactStr(String seriString){
-		
-	}*/
 	
 	/**
 	 * 插入某个serial
@@ -81,17 +79,6 @@ public class SerialDao {
 	public int insertSerial(SeriInfo seriInfo){
 		try{
 			hibernateTemplate.save(seriInfo);
-			/*Connection connection = jdbcTemplate.getDataSource().getConnection();
-			PreparedStatement ps = null;
-			String sql = "insert into seriinfo values(?,?,?,?)";
-			ps = connection.prepareStatement(sql);
-			ps.setString(1, seriInfo.getId());
-			ps.setString(2, seriInfo.getDescription());
-			ps.setString(3, seriInfo.getSerial());
-			ps.setInt(4, seriInfo.getQuality());
-			ps.executeUpdate();
-			System.out.println(seriInfo.toString());*/
-			System.out.println("************************成功**********************");
 			return 1;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -278,6 +265,19 @@ public class SerialDao {
 			qualityCounts.add(count.size()>0?count.get(0):0L);
 				}
 		return qualityCounts;
+	}
+	
+	
+	public List<Integer>countSerialLength(){
+		List<Integer>serialLengthCounts = new ArrayList<Integer>();
+		List<String>serialList = new ArrayList<String>();
+		String hql = "select serial from SeriInfo";
+		serialList = hibernateTemplate.find(hql);
+		//统计各个阶段的序列号长度
+		serialLengthCounts = new CountSerialLength().countSerialLength(serialList);
+		
+		return serialLengthCounts;
+		
 	}
 	
 	
