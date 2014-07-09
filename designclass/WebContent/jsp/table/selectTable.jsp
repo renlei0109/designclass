@@ -12,7 +12,7 @@
 <script src="/designclass/js/jquery-1.9.1.min.js"></script>
 <%
 	int currentPage =Integer.valueOf( session.getAttribute("currentPage").toString());
-	int totalPage = 265951/20;
+	int totalPage = 26595/20+1;
 	List<SeriInfo>seriInfos = new ArrayList<SeriInfo>();
 	seriInfos = (List<SeriInfo>)session.getAttribute("seriInfos");
 %>
